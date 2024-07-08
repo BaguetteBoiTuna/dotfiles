@@ -208,6 +208,7 @@ alias wgu='sudo wg-quick up wg0'
 alias wgd='sudo wg-quick down wg0'
 alias vim='nvim'
 alias img='viewnior'
+alias lgit='lazygit'
 
 # tmux
 
@@ -295,6 +296,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# nvim as default terminal editor
+export EDITOR=nvim
 
 # zoxide
 
