@@ -14,7 +14,7 @@ Welcome to my dotfiles repository! This repository is managed using [chezmoi](ht
 1. **Clone the Repository:**
 
    ```sh
-   git clone https://github.com/yourusername/dotfiles.git
+   git clone https://github.com/BaguetteBoiTuna/dotfiles.git
    cd dotfiles
    ```
 
