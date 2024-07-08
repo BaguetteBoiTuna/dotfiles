@@ -21,7 +21,7 @@ Welcome to my dotfiles repository! This repository is managed using [chezmoi](ht
 2. **Install chezmoi:**
 
    ```sh
-   sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply yourusername
+   sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply BaguetteBoiTuna
    ```
 
 This command initializes chezmoi and applies the dotfiles in this repository to your home directory.
