@@ -1,0 +1,52 @@
+[[session]]
+name = "Home 🏠"
+path = "~/"
+
+[[session]]
+name = "Downloads 📥"
+path = "~/Downloads"
+startup_command = "ranger"
+
+[[session]]
+name = "Repos 📦"
+path = "~/Repos/"
+startup_command = "ls"
+
+[[session]]
+name = "Sandboxes 🏖"
+path = "~/Playground/"
+startup_command = "ls"
+
+[[session]]
+name = "Epitech 🎓"
+path = "~/Epitech/"
+startup_command = "ls"
+
+[[session]]
+name = "GoAsie 📦"
+path = "~/Repos/goasie/"
+
+[[session]]
+name = "Config 🛠"
+path = "~/.config/"
+statup_command = "la"
+
+[[session]]
+name = "LazyVim config 🛠"
+path = "~/.config/nvim/"
+startup_command = "nvim"
+
+[[session]]
+name = "Bspwm config 🛠"
+path = "~/.config/bspwm/"
+startup_command = "la"
+
+[[session]]
+name = "Sesh config 🛠"
+path = "~/.config/sesh/"
+startup_command = "nvim"
+
+[[session]]
+name = "Tmux config 🛠"
+path = "~/.config/tmux/"
+startup_command = "nvim"
