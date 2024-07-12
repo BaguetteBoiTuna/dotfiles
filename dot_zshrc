@@ -289,6 +289,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
 
+# zed
+
+export PATH="$HOME/.local/bin:$PATH"
+
 # pnpm
 export PNPM_HOME="/home/dante/.local/share/pnpm"
 case ":$PATH:" in
