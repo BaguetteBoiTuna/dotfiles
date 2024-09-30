@@ -120,7 +120,7 @@ rehash_precmd() {
 add-zsh-hook -Uz precmd rehash_precmd
 
 # omz
-alias zshconfig="geany ~/.zshrc"
+alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="thunar ~/.oh-my-zsh"
 
 # ls
@@ -202,8 +202,10 @@ alias yayr='yay -R'
 # shortcuts
 
 alias stest='speedtest-cli'
+alias charge='watch -n 1 acpi -i'
 alias pn='pnpm'
 alias px='pnpx'
+alias py3='python3'
 alias wgu='sudo wg-quick up wg0'
 alias wgd='sudo wg-quick down wg0'
 alias vim='nvim'
@@ -246,6 +248,9 @@ alias sex='tmux kill-server'
 
 alias c='xsel --input --clipboard'
 alias p='xsel --output --clipboard'
+
+# fixing hdmi
+alias hdmifix='xrandr --output HDMI1 --same-as eDP1 --mode 1920x1080 --rate 60'
 
 # the fuck
 

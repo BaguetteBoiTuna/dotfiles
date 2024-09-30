@@ -63,6 +63,21 @@ return {
       vim.g.sonokai_transparent_background = 1
     end,
   },
+  -- cyberdream
+  {
+    "scottmckendry/cyberdream.nvim",
+    name = "cyberdream",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("cyberdream").setup({
+        transparent = true,
+        theme = {
+          variant = "dark",
+        }
+      })
+    end,
+  },
   -- lazyvim
   {
     "LazyVim/LazyVim",
