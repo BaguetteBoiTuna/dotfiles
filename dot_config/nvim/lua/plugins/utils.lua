@@ -20,7 +20,7 @@ return {
   },
   -- lazygit
   {
-    'kdheepak/lazygit.nvim',
+    "kdheepak/lazygit.nvim",
     cmd = {
       "LazyGit",
       "LazyGitConfig",
@@ -47,7 +47,7 @@ return {
       { "<c-i>", "<cmd><C-U>TmuxNavigateUp<cr>" },
       { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
       { "c-\\", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-    }
+    },
   },
   -- -- avante
   -- {
@@ -96,119 +96,123 @@ return {
   --   },
   -- },
   --  inc-rename
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    keys = {
-      {
-        "<leader>rn",
-        function()
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end,
-        desc = "Incremental rename",
-        mode = "n",
-        noremap = true,
-        expr = true,
-      },
-    },
-    config = true,
-  },
+  -- {
+  --   "smjonas/inc-rename.nvim",
+  --   cmd = "IncRename",
+  --   keys = {
+  --     {
+  --       "<leader>rn",
+  --       function()
+  --         return ":IncRename " .. vim.fn.expand("<cword>")
+  --       end,
+  --       desc = "Incremental rename",
+  --       mode = "n",
+  --       noremap = true,
+  --       expr = true,
+  --     },
+  --   },
+  --   config = true,
+  -- },
   -- obsidian
   {
     "epwalsh/obsidian.nvim",
     version = "*",
     lazy = true,
     ft = "markdown",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "hrsh7th/nvim-cmp",
+        ft = "markdown", -- INFO: only load nvim-cmp in markdown files since default is blink.cmp
+      },
+    },
     config = function()
-      require("obsidian").setup(
-        {
-          workspaces = {
-            {
-              name = "Obsidian",
-              path = "~/Obsidian",
-            },
+      require("obsidian").setup({
+        workspaces = {
+          {
+            name = "Obsidian",
+            path = "~/Obsidian",
           },
-          completion = {
+        },
+        completion = {
 
-            nvim_cmp = true,
-            min_chars = 2,
-            new_note_location = "current_dir",
-          },
-          mappings = {},
+          nvim_cmp = true,
+          min_chars = 2,
+          new_note_location = "current_dir",
+        },
+        mappings = {},
 
-          -- Function that adds the timestamp to the new note and formats its name
-          note_id_func = function(title)
-            local timestamp = os.date("%Y-%m-%d")
-            local sanitizedTitle = title or "untitled"
-            sanitizedTitle = sanitizedTitle:gsub("%s+", "-"):lower()
-            return timestamp .. "-" .. sanitizedTitle
-          end,
+        -- Function that adds the timestamp to the new note and formats its name
+        note_id_func = function(title)
+          local timestamp = os.date("%Y-%m-%d")
+          local sanitizedTitle = title or "untitled"
+          sanitizedTitle = sanitizedTitle:gsub("%s+", "-"):lower()
+          return timestamp .. "-" .. sanitizedTitle
+        end,
 
-          -- Function that changes the appearance of the note links
-          wiki_link_func = function(opts)
-            if opts.id == nil then
-              return string.format("[[%s]]", opts.label)
-            elseif opts.label ~= opts.id then
-              return string.format("[[%s|%s]]", opts.id, opts.label)
-            else
-              return string.format("[[%s]]", opts.id)
+        -- Function that changes the appearance of the note links
+        wiki_link_func = function(opts)
+          if opts.id == nil then
+            return string.format("[[%s]]", opts.label)
+          elseif opts.label ~= opts.id then
+            return string.format("[[%s|%s]]", opts.id, opts.label)
+          else
+            return string.format("[[%s]]", opts.id)
+          end
+        end,
+
+        -- Function that formats the yaml frontmatter of the note
+        -- it also automatically adds the directories as tags
+        note_frontmatter_func = function(note)
+          local out = { id = note.id, aliases = note.aliases, tags = {} }
+          if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+            for k, v in pairs(note.metadata) do
+              out[k] = v
             end
-          end,
+          end
 
-          -- Function that formats the yaml frontmatter of the note
-          -- it also automatically adds the directories as tags
-          note_frontmatter_func = function(note)
-            local out = { id = note.id, aliases = note.aliases, tags = {} }
-            if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-              for k, v in pairs(note.metadata) do
-                out[k] = v
-              end
+          local filePath = note.path.filename
+          local dirs = {}
+          for dir in filePath:gmatch("([^/]+)") do
+            table.insert(dirs, dir)
+          end
+
+          local obsidianIndex = -1
+          for i, dir in ipairs(dirs) do
+            if dir == "Obsidian" then
+              obsidianIndex = i
+              break
             end
+          end
 
-            local filePath = note.path.filename
-            local dirs = {}
-            for dir in filePath:gmatch("([^/]+)") do
-              table.insert(dirs, dir)
-            end
+          if obsidianIndex ~= -1 then
+            dirs = { unpack(dirs, obsidianIndex + 1) }
+          end
 
-            local obsidianIndex = -1
-            for i, dir in ipairs(dirs) do
-              if dir == "Obsidian" then
-                obsidianIndex = i
-                break
-              end
-            end
+          table.remove(dirs)
+          out.tags = dirs
 
-            if obsidianIndex ~= -1 then
-              dirs = {unpack(dirs, obsidianIndex + 1)}
-            end
+          return out
+        end,
 
-            table.remove(dirs)
-            out.tags = dirs
-
-            return out
-          end,
-
-          -- templates = {
-          --   subdir = "Templates",
-          --   date_format = "%Y-%m-%d",
-          --   time_format = "%H:%M",
-          --   tags = "",
-          --   substitutions = {
-          --     yesterday = function()
-          --       return os.date("%Y-%m-%d", os.time() - 86400)
-          --     end,
-          --     tomorrow = function()
-          --       return os.date("%Y-%m-%d", os.time() + 86400)
-          --     end,
-          --   }
-          -- },
-          ui = {
-            enabled = true,
-          },
-        }
-      )
+        -- templates = {
+        --   subdir = "Templates",
+        --   date_format = "%Y-%m-%d",
+        --   time_format = "%H:%M",
+        --   tags = "",
+        --   substitutions = {
+        --     yesterday = function()
+        --       return os.date("%Y-%m-%d", os.time() - 86400)
+        --     end,
+        --     tomorrow = function()
+        --       return os.date("%Y-%m-%d", os.time() + 86400)
+        --     end,
+        --   }
+        -- },
+        ui = {
+          enabled = true,
+        },
+      })
     end,
   },
   -- Use <tab> for completion and snippets (supertab)
@@ -221,46 +225,51 @@ return {
   },
   -- then: setup supertab in cmp
   -- nvim-cmp
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-    },
-    ---@param opts cmp.ConfigSchema
-    opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-      local luasnip = require("luasnip")
-      local cmp = require("cmp")
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-            -- this way you will only jump inside the snippet region
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      })
-    end,
-  },
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = {
+  --     "hrsh7th/cmp-emoji",
+  --   },
+  --   ---@param opts cmp.ConfigSchema
+  --   opts = function(_, opts)
+  --     local has_words_before = function()
+  --       unpack = unpack or table.unpack
+  --       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  --       return col ~= 0
+  --         and vim.api
+  --             .nvim_buf_get_lines(0, line - 1, line, true)[1]
+  --             :sub(col, col)
+  --             :match("%s")
+  --           == nil
+  --     end
+  --
+  --     local luasnip = require("luasnip")
+  --     local cmp = require("cmp")
+  --
+  --     opts.mapping = vim.tbl_extend("force", opts.mapping, {
+  --       ["<Tab>"] = cmp.mapping(function(fallback)
+  --         if cmp.visible() then
+  --           cmp.select_next_item()
+  --           -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+  --           -- this way you will only jump inside the snippet region
+  --         elseif luasnip.expand_or_jumpable() then
+  --           luasnip.expand_or_jump()
+  --         elseif has_words_before() then
+  --           cmp.complete()
+  --         else
+  --           fallback()
+  --         end
+  --       end, { "i", "s" }),
+  --       ["<S-Tab>"] = cmp.mapping(function(fallback)
+  --         if cmp.visible() then
+  --           cmp.select_prev_item()
+  --         elseif luasnip.jumpable(-1) then
+  --           luasnip.jump(-1)
+  --         else
+  --           fallback()
+  --         end
+  --       end, { "i", "s" }),
+  --     })
+  --   end,
+  -- },
 }
