@@ -31,4 +31,10 @@ macos-icon-frame = chrome
 
 # keybinds
 
+# reload config
 keybind = super+r=reload_config
+
+
+# (other than macos)
+# ctrl c copies to clipboard if possible else sends ctrl c to terminal
+keybind = performable:ctrl+c=copy_to_clipboard
