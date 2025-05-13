@@ -1,6 +1,7 @@
 # appearance
 # INFO: If you want to use my theme, make sure you have it. And uncomment the theme line.
 theme = tunakai
+# custom-shader = shaders/bloom.glsl
 # Backup theme:
 # theme = GruvboxDarkHard
 font-family = JetBrains Mono
@@ -38,3 +39,6 @@ keybind = super+r=reload_config
 # (other than macos)
 # ctrl c copies to clipboard if possible else sends ctrl c to terminal
 keybind = performable:ctrl+c=copy_to_clipboard
+
+# quick terminal
+keybind = global:cmd+s=toggle_quick_terminal

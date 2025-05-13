@@ -12,7 +12,8 @@ return {
         sections = {
           {
             section = "terminal",
-            cmd = "chafa ~/.config/nvim/dashimg.jpg --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1",
+            cmd = 'chafa "$(find ~/.config/nvim/images -type f | shuf -n 1)" --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
+            ttl = 0,
             height = 17,
             padding = 1,
           },
