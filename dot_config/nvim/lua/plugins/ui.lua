@@ -7,12 +7,12 @@ return {
           pick = function(cmd, opts)
             return LazyVim.pick(cmd, opts)()
           end,
-          header = false,
+          header = true,
         },
         sections = {
           {
             section = "terminal",
-            cmd = 'chafa "$(find ~/.config/nvim/images -type f | shuf -n 1)" --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
+            cmd = "chafa ~/.config/nvim/images/$(ls ~/.config/nvim/images | shuf -n 1) --format symbols --symbols vhalf --size 60x17 --stretch",
             ttl = 0,
             height = 17,
             padding = 1,
