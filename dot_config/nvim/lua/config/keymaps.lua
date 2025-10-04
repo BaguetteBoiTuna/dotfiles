@@ -52,3 +52,16 @@ keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<cr>", opts)
 keymap.set("n", "<leader>on", "<cmd>ObsidianNew<cr>", opts)
 keymap.set("n", "<leader>os", "<cmd>ObsidianSearch<cr>", opts)
 keymap.set("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<cr>", opts)
+
+-- amp cli
+vim.keymap.set("n", "<leader>ai", function()
+  vim.cmd("vsplit | terminal amp --ide")
+  vim.api.nvim_create_autocmd("TermClose", {
+    buffer = 0,
+    once = true,
+    callback = function()
+      vim.cmd("bd!")
+    end,
+  })
+  vim.cmd("startinsert")
+end, { desc = "Amp IDE side panel" })

@@ -12,13 +12,16 @@ return {
         sections = {
           {
             section = "terminal",
-            cmd = "chafa ~/.config/nvim/images/$(ls ~/.config/nvim/images | shuf -n 1) --format symbols --symbols vhalf --size 60x17 --stretch",
+            cmd = "cat ~/.config/nvim/chafa_cache/$(ls ~/.config/nvim/chafa_cache | shuf -n 1); sleep .1",
             ttl = 0,
             height = 17,
             padding = 1,
           },
-          { section = "keys", gap = 1, padding = 1 },
-          { section = "startup" },
+          {
+            pane = 2,
+            { section = "keys", gap = 1, padding = 1 },
+            { section = "startup" },
+          },
         },
       },
       terminal = {
