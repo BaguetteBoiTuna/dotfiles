@@ -1,0 +1,14 @@
+color:
+  theme: custom
+
+icons:
+  theme: fancy
+  when: always
+
+sorting:
+  column: extension
+  reverse: false
+  dir-grouping: first
+  dirs_first: true
+  group_directories_first: true
+  natural: true

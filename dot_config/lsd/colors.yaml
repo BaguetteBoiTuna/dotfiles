@@ -1,0 +1,18 @@
+user:
+  custom:
+    normal: white
+    symlink: cyan
+    dir: blue
+    exe: green
+    block_device: yellow
+    character_device: yellow
+    socket: magenta
+    pipe: magenta
+    image: 213
+    video: 173
+    audio: 141
+    archive: 178
+    document: 111
+    code: 45
+    temp: 240
+    other: 245

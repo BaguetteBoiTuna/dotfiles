@@ -112,6 +112,9 @@ alias dl='lazydocker'
 # repomix
 alias repomix='repomix --style plain --ignore "repomix_output.txt"'
 
+# amp
+alias ampi='amp --ide'
+
 # INFO: Exports
 
 # volta
@@ -128,6 +131,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # flutter
 export PATH=$HOME/development/flutter/bin:$PATH
+
+# LS_COLORS
+export LS_COLORS="$(vivid generate molokai)"
 
 # point Exegol (and anything docker-py) at Colima's socket
 export DOCKER_HOST="$(docker context inspect --format '{{ .Endpoints.docker.Host }}')"
@@ -176,6 +182,9 @@ eval "$(fzf --zsh)"
 
 # terminal prompt (starship)
 eval "$(starship init zsh)"
+
+# dircolors
+# eval "$(gdircolors -b ~/.dircolors)"
 
 fetch
 
